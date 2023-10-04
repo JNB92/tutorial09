@@ -26,5 +26,13 @@ void uart_putc(char c)
 }
 
 /** CODE: Write your code for Ex 9.0 below this line. */
+void uart_puts(char* string)
+{
+    while (*string)
+    {
+        uart_putc(*string);
+        string++;
+    }
+}
 
 /** CODE: Write your code for Ex 9.0 above this line. */

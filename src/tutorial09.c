@@ -32,7 +32,7 @@ and transmits this string via the UART using uart_putc.
 int main(void)
 {
     uart_init();
-
+   
     /** EX: 9.1
 
     TASK: Write code below that will call uart_puts() to print
@@ -41,6 +41,8 @@ int main(void)
     The string you print should begin with a leading 'n' and
     should be terminated with a newline character '\n';
     */
+   
+   uart_puts("n11400072\n");
 
 
     /** CODE: Write your code for Ex 9.1 above this line. */
@@ -124,6 +126,12 @@ int main(void)
     TASK: Write code below that will call timer_init() only after
     the character 'a' has been received via the UART interface.
     */
+
+   char receivedChar = uart_getc();
+   if (receivedChar == 'a')
+   {
+      timer_init();
+   }
 
 
     /** CODE: Write your code for Ex 9.4 above this line. */
