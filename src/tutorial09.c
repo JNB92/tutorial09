@@ -1,5 +1,10 @@
 #include "uart.h"
 #include "timer.h"
+#include "spi.h"
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <util/delay.h>
+
 
 /** Tutorial 09
 
@@ -77,12 +82,12 @@ int main(void)
 
     /** CODE: Write your code for Ex 9.2 in spi.c and spi.h. */
 
-    /** TODO: Remove this line when Ex 9.2 is complete.
+ 
 
     spi_init();       // Initialise SPI
     spi_write(0xFF);  // Clear display
 
-    /** TODO: Remove this line when Ex 9.2 is complete. */
+
 
     /** EX: 9.3
 
@@ -127,12 +132,15 @@ int main(void)
     the character 'a' has been received via the UART interface.
     */
 
-   char receivedChar = uart_getc();
-   if (receivedChar == 'a')
+   for (;;) // Loop forever
    {
-      timer_init();
+      char c = uart_getc();
+      if (uart_getc == 'a')
+      {
+         timer_init();
+         break;
+      }
    }
-
 
     /** CODE: Write your code for Ex 9.4 above this line. */
 

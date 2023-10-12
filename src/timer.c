@@ -1,5 +1,9 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <util/delay.h>
+#include "spi.h"
+#include "uart.h"
+#include "timer.h"
 
 void timer_init(void)
 {
@@ -18,15 +22,19 @@ ISR(TCB0_INT_vect)
     static uint8_t displayLeft = 1;  // start with left digit
     const uint8_t digitMap[] = {0b0000001, 0b1001111, 0b0010010, 0b0000110, 0b1001100, 0b0100100, 0b0100000, 0b0001111, 0b0000000, 0b0000100};
 
+    // The first and second digits from the student number are '1' and '1' respectively
+    const uint8_t FirstDigit = 0b1001111;
+    const uint8_t SecondDigit = 0b1001111;
+
     if (displayLeft)
     {
         // Display first digit of student number on LHS of the 7-segment display
-        // TODO: send digitMap[FirstDigit] to 7-segment display
+        spi_write(digitMap[FirstDigit]);
     }
     else
     {
         // Display second digit of student number on RHS of the 7-segment display
-        // TODO: send digitMap[SecondDigit] to 7-segment display
+        spi_write(digitMap[SecondDigit]);
     }
 
     displayLeft = !displayLeft; // Toggle display side
