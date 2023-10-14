@@ -16,32 +16,22 @@ void timer_init(void)
     sei();
 }
 
-ISR(TCB0_INT_vect)
-{
+    ISR(TCB0_INT_vect)
+    {
+        volatile uint8_t segs [] = {
+        0x08,0x6B,0x44,0x41,0x23,0x11,0x10,0x4B,0x00,0x01
+    };
+
+    volatile uint8_t digit1 = 1;
+    volatile uint8_t digit2 = 1;
+
     
-    static uint8_t display_toggle = 0; 
-
-    // Truth table mapping for 7-segment display digits 0-9
-    uint8_t digit_map[] = {0x01, 0x4F, 0x12, 0x06, 0x4C, 0x24, 0x20, 0x0F, 0x00, 0x04};
-
-    // Replace 1 and 2 with the first and second digits of your student number
-    uint8_t first_digit = 1;
-    uint8_t second_digit = 2;
-
-    if (display_toggle == 0)
-    {
-        spi_write(digit_map[first_digit]);  // Display first digit on LHS
-        _delay_us(10); // Small delay to ensure data latching
-        spi_write(digit_map[second_digit]); // Display second digit on RHS
+    static int digit = 0;
+    if (digit) {
+        spi_write(segs[digit1] | (0x01 << 7)); 
+    } else {
+        spi_write(segs[digit2]);
     }
-    else
-    {
-        spi_write(digit_map[second_digit]); // Display second digit on LHS
-        _delay_us(10); // Small delay to ensure data latching
-        spi_write(digit_map[first_digit]);  // Display first digit on RHS
-    }
-
-    display_toggle ^= 1; // Toggle the display state for the next ISR invocation
-
+    digit = !digit;
     TCB0.INTFLAGS = TCB_CAPT_bm;
 }

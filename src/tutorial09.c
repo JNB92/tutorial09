@@ -133,8 +133,7 @@ int main(void)
    
 
    char c = uart_getc();
-    {
-              
+    {         
         if(c == 'a')
         {
             timer_init();            
@@ -142,9 +141,6 @@ int main(void)
         }
         uart_putc(c);
     }
-
-
-
     /** CODE: Write your code for Ex 9.4 above this line. */
 
     while (1)
