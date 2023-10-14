@@ -27,7 +27,7 @@ void timer_init(void)
 
     
     static int digit = 0;
-    if (digit) {
+    if (digit) { 
         spi_write(segs[digit1] | (0x01 << 7)); 
     } else {
         spi_write(segs[digit2]);
