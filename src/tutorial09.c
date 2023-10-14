@@ -3,7 +3,7 @@
 #include "spi.h"
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include <util/delay.h>
+
 
 
 /** Tutorial 09
@@ -86,8 +86,7 @@ int main(void)
 
     spi_init();       // Initialise SPI
     spi_write(0xFF);  // Clear display
-
-
+    
 
     /** EX: 9.3
 
@@ -131,18 +130,17 @@ int main(void)
     TASK: Write code below that will call timer_init() only after
     the character 'a' has been received via the UART interface.
     */
-   char received_char;
+   
+
+   char c = uart_getc();
     {
-        
-        received_char = uart_getc();
-
-        
-        if(received_char == 'a')
+              
+        if(c == 'a')
         {
-
-            timer_init();
+            timer_init();            
 
         }
+        uart_putc(c);
     }
 
 

@@ -21,7 +21,7 @@ char uart_getc(void)
 
 void uart_putc(char c)
 {
-    while (!(USART0.STATUS & USART_DREIF_bm))
+    while (!(USART0.STATUS & USART_DREIF_bm)) 
         ; // Wait for TXDATA empty
     USART0.TXDATAL = c;
 }
@@ -34,6 +34,7 @@ void uart_puts(char* string)
         uart_putc(*string);
         string++;
     }
+
 }
 
 /** CODE: Write your code for Ex 9.0 above this line. */
